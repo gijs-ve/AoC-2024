@@ -2,7 +2,6 @@ package day3
 
 import (
 	"aoc/utils"
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -28,8 +27,6 @@ func FindMuls(input string, enableDoAndDonts bool) []Mul {
 	mulSlice := []Mul{}
 	do := true
 	for i := range stringSlice {
-		currentLetter := stringSlice[i]
-		fmt.Print(currentLetter)
 		if enableDoAndDonts && stringSlice[i] == "d" && stringSlice[i+1] == "o" {
 			if stringSlice[i+2] == "(" && stringSlice[i+3] == ")" {
 				{
@@ -49,14 +46,14 @@ func FindMuls(input string, enableDoAndDonts bool) []Mul {
 		}
 		x := ""
 		y := ""
-		findY := false
+		yIsFound := false
 		for j := i + 4; j < len(stringSlice); j++ {
 			currentCharacter := stringSlice[j]
 			if !CharacterIsValid(currentCharacter) {
 				break
 			}
 			if currentCharacter == "," {
-				findY = true
+				yIsFound = true
 				continue
 			}
 			if currentCharacter == ")" {
@@ -65,11 +62,11 @@ func FindMuls(input string, enableDoAndDonts bool) []Mul {
 				}
 				break
 			}
-			if !findY {
+			if !yIsFound {
 				x += currentCharacter
 				continue
 			}
-			if findY {
+			if yIsFound {
 				y += currentCharacter
 				continue
 			}

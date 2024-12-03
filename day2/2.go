@@ -20,13 +20,11 @@ func Part2(input []string) int {
 	dampenedReports := []Report{}
 	safeReports := 0
 
-	//split each string into a slice of numbers
 	for i := range input {
 		report := utils.SplitString(input[i], " ")
 		isSafe := reportIsSafe(report)
 		if !isSafe {
 			for r := range report {
-				//make copy of the report, and remove index r. Do this for the len of report
 				dampenedReport := []string{}
 				for j := range report {
 					if j == r {
