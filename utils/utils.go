@@ -21,6 +21,22 @@ func (u Utils) ReadExample() []string {
 	return readLinesFromFile("example.txt")
 }
 
+func (u Utils) ReadSampleAsString() string {
+	return readAsString("sample.txt")
+}
+
+func (u Utils) ReadExampleAsString() string {
+	return readAsString("example.txt")
+}
+
+func readAsString(path string) string {
+	fData, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+	return string(fData)
+}
+
 func readLinesFromFile(path string) []string {
 	fData, err := os.ReadFile(path)
 	if err != nil {
