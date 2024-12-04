@@ -6,7 +6,6 @@ import (
 
 func Part1(input []string) int {
 	return countSafeReports(input)
-
 }
 
 type Report struct {
