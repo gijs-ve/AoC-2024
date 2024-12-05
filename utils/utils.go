@@ -6,7 +6,6 @@ import (
 	"strings"
 )
 
-// utils struct
 type Utils struct{}
 
 func NewUtils() Utils {
@@ -43,6 +42,26 @@ func readLinesFromFile(path string) []string {
 		panic(err)
 	}
 	return strings.Split(string(fData), "\n")
+}
+
+func (u Utils) JoinByComma(input []string) string {
+	return strings.Join(input, ",")
+}
+
+func (u Utils) SplitByEmptyLine(input []string) ([]string, []string) {
+	var groups [][]string
+	var group []string
+
+	for _, line := range input {
+		if line == "" {
+			groups = append(groups, group)
+			group = []string{}
+		} else {
+			group = append(group, line)
+		}
+	}
+	groups = append(groups, group)
+	return groups[0], groups[1]
 }
 
 func (u Utils) SplitSpaces(str string) []string {

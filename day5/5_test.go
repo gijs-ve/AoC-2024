@@ -1,4 +1,4 @@
-package day4
+package day5
 
 import (
 	"aoc/utils"
@@ -13,7 +13,7 @@ func Test_Part1(t *testing.T) {
 	example := utils.ReadExample()
 
 	result := Part1(example)
-	assert.Equal(18, result)
+	assert.Equal(143, result)
 }
 
 func Test_Part2(t *testing.T) {
@@ -22,5 +22,5 @@ func Test_Part2(t *testing.T) {
 	example := utils.ReadExample()
 
 	result := Part2(example)
-	assert.Equal(9, result)
+	assert.Equal(123, result)
 }
