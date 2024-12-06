@@ -1,9 +1,13 @@
 package utils
 
 import (
+	"encoding/json"
+	"errors"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/jinzhu/copier"
 )
 
 type Utils struct{}
@@ -110,4 +114,80 @@ func (u Utils) StringToInt(s string) int {
 func (u Utils) StringToInt64(s string) int64 {
 	i, _ := strconv.ParseInt(s, 10, 64)
 	return i
+}
+
+func (u Utils) MakeGrid(input []string, sep string) [][]string {
+	var xy [][]string
+	for _, line := range input {
+		xy = append(xy, strings.Split(line, sep))
+	}
+	return xy
+}
+
+func (u Utils) CopyGrid(grid [][]string) [][]string {
+	var newGrid [][]string
+	copier.Copy(&newGrid, &grid)
+	return newGrid
+}
+
+func (u Utils) DeepCopy(src, dst interface{}) error {
+	bytes, err := json.Marshal(src)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(bytes, dst)
+}
+
+func (U Utils) AddBounds(grid [][]string, chararacter string) [][]string {
+	newGrid := [][]string{}
+	for i := 0; i < len(grid)+2; i++ {
+		newGrid = append(newGrid, []string{})
+		for j := 0; j < len(grid[0])+2; j++ {
+			if i == 0 || i == len(grid)+1 || j == 0 || j == len(grid[0])+1 {
+				newGrid[i] = append(newGrid[i], chararacter)
+			} else {
+				newGrid[i] = append(newGrid[i], grid[i-1][j-1])
+			}
+		}
+	}
+	return newGrid
+}
+
+func (u Utils) FindPositionInGrid(grid [][]string, character string) (int, int, error) {
+	for i := range grid {
+		for j := range grid[i] {
+			if grid[i][j] == character {
+				return i, j, nil
+			}
+		}
+	}
+	return -1, -1, errors.New("Character not found in grid")
+}
+
+func (u Utils) GetNextBlock(grid [][]string, x, y int, direction string) string {
+	if direction == "up" {
+		return grid[x-1][y]
+	}
+	if direction == "down" {
+		return grid[x+1][y]
+	}
+	if direction == "left" {
+		return grid[x][y-1]
+	}
+	if direction == "right" {
+		return grid[x][y+1]
+	}
+	return ""
+}
+
+func (u Utils) CountInstancesInGrid(grid [][]string, character string) int {
+	count := 0
+	for i := range grid {
+		for j := range grid[i] {
+			if grid[i][j] == character {
+				count++
+			}
+		}
+	}
+	return count
 }
