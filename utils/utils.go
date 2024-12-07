@@ -116,6 +116,10 @@ func (u Utils) StringToInt64(s string) int64 {
 	return i
 }
 
+func (u Utils) IntToString(i int) string {
+	return strconv.Itoa(i)
+}
+
 func (u Utils) MakeGrid(input []string, sep string) [][]string {
 	var xy [][]string
 	for _, line := range input {
@@ -190,4 +194,12 @@ func (u Utils) CountInstancesInGrid(grid [][]string, character string) int {
 		}
 	}
 	return count
+}
+
+func (u Utils) Factorial(n int) (result int) {
+	if n > 0 {
+		result = n * u.Factorial(n-1)
+		return result
+	}
+	return 1
 }
