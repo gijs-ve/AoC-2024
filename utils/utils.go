@@ -102,6 +102,25 @@ func (u Utils) Abs(x int) int {
 	return x
 }
 
+func (u Utils) Contains(slice []string, char string) bool {
+	for _, c := range slice {
+		if c == char {
+			return true
+		}
+	}
+	return false
+}
+
+func (u Utils) Remove(slice []string, char string) []string {
+	newSlice := []string{}
+	for _, c := range slice {
+		if c != char {
+			newSlice = append(newSlice, c)
+		}
+	}
+	return newSlice
+}
+
 func (u Utils) SplitString(s string, sep string) []string {
 	return strings.Split(s, sep)
 }
@@ -126,6 +145,53 @@ func (u Utils) MakeGrid(input []string, sep string) [][]string {
 		xy = append(xy, strings.Split(line, sep))
 	}
 	return xy
+}
+
+func (u Utils) FindUniqueCharactersInGrid(input [][]string) []string {
+	characterSlice := []string{}
+	for _, line := range input {
+		for _, character := range line {
+			if !u.Contains(characterSlice, character) {
+				characterSlice = append(characterSlice, character)
+			}
+		}
+	}
+	return characterSlice
+}
+
+type XY struct {
+	X, Y int
+}
+
+func (u Utils) FindCharactersInGrid(grid [][]string, character string) []XY {
+	characterSlice := []XY{}
+	for x, line := range grid {
+		for y, c := range line {
+			if c == character {
+				characterSlice = append(characterSlice, XY{X: x, Y: y})
+			}
+		}
+	}
+	return characterSlice
+}
+
+func (u Utils) GetXYDistance(objectA, objectB XY) XY {
+	return XY{X: u.Abs(objectA.X - objectB.X), Y: u.Abs(objectA.Y - objectB.Y)}
+}
+
+func (u Utils) GetOffset(objectA, objectB XY) XY {
+	distance := u.GetXYDistance(objectA, objectB)
+	offsetX := distance.X
+	offsetY := distance.Y
+
+	if objectA.X > objectB.X {
+		offsetX = -distance.X
+	}
+
+	if objectA.Y > objectB.Y {
+		offsetY = -distance.Y
+	}
+	return XY{X: offsetX, Y: offsetY}
 }
 
 func (u Utils) CopyGrid(grid [][]string) [][]string {

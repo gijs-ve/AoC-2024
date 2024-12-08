@@ -43,7 +43,6 @@ func Part2(input []string) int {
 			resultSum += line.result
 		}
 	}
-
 	return resultSum
 }
 
@@ -66,7 +65,7 @@ func generateLines(input []string) []Line {
 func lineHasValidEquation(line Line, possibleOperators []string) bool {
 	operators := generateOperators(len(line.numbers)-1, possibleOperators)
 	for _, operator := range operators {
-		if solveExpression(line.numbers, operator) == line.result {
+		if solveExpression(line.numbers, operator, line.result) == line.result {
 			return true
 		}
 	}
@@ -90,10 +89,13 @@ func generateOperators(numbersLength int, possibleOperators []string) [][]string
 	return operators
 }
 
-func solveExpression(numbers []int, operators []string) int {
+func solveExpression(numbers []int, operators []string, target int) int {
 	utils := utils.NewUtils()
 	result := numbers[0]
 	for i, operator := range operators {
+		if result > target {
+			break
+		}
 		if operator == "+" {
 			result += numbers[i+1]
 		}

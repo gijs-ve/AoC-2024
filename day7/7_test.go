@@ -19,7 +19,7 @@ func Test_Part1(t *testing.T) {
 func Test_Part2(t *testing.T) {
 	assert := assert.New(t)
 	utils := utils.NewUtils()
-	example := utils.ReadSample()
+	example := utils.ReadExample()
 
 	result := Part2(example)
 	assert.Equal(11387, result)
