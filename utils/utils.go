@@ -159,8 +159,15 @@ func (u Utils) FindUniqueCharactersInGrid(input [][]string) []string {
 	return characterSlice
 }
 
+// grid related
 type XY struct {
 	X, Y int
+}
+
+type Block struct {
+	X         int
+	Y         int
+	Character string
 }
 
 func (u Utils) FindCharactersInGrid(grid [][]string, character string) []XY {
@@ -248,6 +255,15 @@ func (u Utils) GetNextBlock(grid [][]string, x, y int, direction string) string 
 		return grid[x][y+1]
 	}
 	return ""
+}
+
+func (u Utils) GetAdjacentBlocks(grid [][]string, x, y int) []Block {
+	return []Block{
+		{X: x - 1, Y: y, Character: grid[x-1][y]},
+		{X: x + 1, Y: y, Character: grid[x+1][y]},
+		{X: x, Y: y - 1, Character: grid[x][y-1]},
+		{X: x, Y: y + 1, Character: grid[x][y+1]},
+	}
 }
 
 func (u Utils) CountInstancesInGrid(grid [][]string, character string) int {
