@@ -48,6 +48,10 @@ func readLinesFromFile(path string) []string {
 	return strings.Split(string(fData), "\n")
 }
 
+func (u Utils) JoinBySpace(input []string) string {
+	return strings.Join(input, " ")
+}
+
 func (u Utils) JoinByComma(input []string) string {
 	return strings.Join(input, ",")
 }
@@ -100,6 +104,18 @@ func (u Utils) Abs(x int) int {
 		return -x
 	}
 	return x
+}
+
+func (u Utils) IsEven(x int) bool {
+	return x%2 == 0
+}
+
+func (u Utils) IsOdd(x int) bool {
+	return x%2 == 1
+}
+
+func (u Utils) IntLength(x int) int {
+	return len(strconv.Itoa(x))
 }
 
 func (u Utils) Contains(slice []string, char string) bool {
